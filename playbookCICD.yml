@@ -49,11 +49,11 @@
         state: present
         namespace: jenkins
         src: deployment.yaml
-        kubeconfig: config # Path to your kubeconfig file
+        kubeconfig: /var/lib/jenkins/.kube/config # Path to your kubeconfig file
 
     - name: Apply Kubernetes Service
       kubernetes.core.k8s:
         state: present
         namespace: jenkins
         src: service.yaml
-        kubeconfig: config
+        kubeconfig: /var/lib/jenkins/.kube/config
