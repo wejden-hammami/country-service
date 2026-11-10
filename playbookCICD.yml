@@ -9,7 +9,7 @@
 
   vars:
     image_name: my-country-service
-    image_tag: v1
+    image_tag: "{{ build_tag | default('v1') }}"
     dockerfile_path: './'
     docker_registry_username: "{{ dockerhub_username }}"
     docker_registry_password: "{{ dockerhub_password }}"
@@ -48,7 +48,9 @@
       kubernetes.core.k8s:
         state: present
         namespace: jenkins
-        src: deployment.yaml
+        
+        definition: "{{ lookup('template', 'deployment.yaml') | from_yaml }}"
+
         kubeconfig: /var/lib/jenkins/.kube/config # Path to your kubeconfig file
 
     - name: Apply Kubernetes Service
